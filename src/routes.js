@@ -1,5 +1,5 @@
 const {Router} = require('express')
-const {users} = require('./controllers/User')
+const users = require('./controllers/User')
 const {log, _catch} = require('./middleware')
 const {authenticated, login} = require('./auth')
 const CleanRouter = () => Router().use(async(req,res,next) => next(res.locals=null)).use(log)
@@ -13,7 +13,6 @@ const App = CleanRouter()
 		.get('/', _catch(users.list))
 		.post('/', _catch(users.create))
 		.delete('/', _catch(users.delete))
-		.put('/permissions', _catch(users.permissions))
 	)
 
 module.exports = {App, Public}

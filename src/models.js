@@ -19,7 +19,7 @@ const User = sequelize.define('users', {
 		type: Sequelize.BOOLEAN,
 		allowNull: true,
 	},
-}, {sequelize, modelName: 'User', tableName: 'users', timestamps: true})
+}, {sequelize, modelName: 'User', tableName: 'users', timestamps: false})
 
 const Session = sequelize.define('session', {
 	id: {
@@ -42,10 +42,14 @@ const Session = sequelize.define('session', {
 }, {sequelize, modelName: 'Session', tableName: 'sessions', timestamps: true})
 
 
-User.hasMany(Session)
+Session.belongsTo(User, {
+  foreignKey: {
+    allowNull: true
+  }
+})
 
 const Models = {
-    User,
+  User,
 	Session
 }
 module.exports = Models

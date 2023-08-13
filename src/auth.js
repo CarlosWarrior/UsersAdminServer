@@ -43,12 +43,14 @@ module.exports = {
 		return next()
 	},
 	login: async(req, res, next) => {
-	    const user = await User.findOne({
+	  const user = await User.findOne({
 			where:{username:req.body.username}
 		})
-	    if(!user) return next(raise({status:422, message:'Invalid credentials'}))
+		
+	  if(!user) return next(raise({status:422, message:'Invalid credentials'}))
 		const password = user.password.substring(0,1) == '"'?user.password.substring(1, user.password.length-1):user.password
-	  	const attempt = await compareHash(req.body.password, password)
+	  const attempt = await compareHash(req.body.password, password)
+
 		if(attempt){
 			const existingSession = await Session.findOne({
 				where: {userId: user.id, active: true},
@@ -63,6 +65,7 @@ module.exports = {
 				const {content, iv} = encrypt(token)
 				await Session.update({active: false}, {where:{userId: user.id, id: { [Op.gt]:0 }} })
 				await Session.create({content, iv, active: true, userId: user.id})
+				console.log({content})
 				return res.send( content )
 			}
 		}

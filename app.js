@@ -32,6 +32,16 @@ db.sync()
 
 
 async function init(){
+  const {User} = require("./src/models")
+  const admin = await User.findOne({where:{admin:true}})
+  if(!admin){
+    await User.create({
+      username: "admin",
+      password: require("./src/crypto").hash(process.env.admin_password),
+      admin: true 
+    })
+    console.log("Admin user created")
+  }
   console.log('app running on port '+process.env.port_app)
 }
 
