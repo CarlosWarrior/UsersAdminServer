@@ -1,4 +1,4 @@
-const validPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+const validPassword = /^(?=.*[A-Za-z#])(?=.*\d)[A-Za-z#\d]{8,}$/
 const isValidPassword = pass => pass && validPassword.test(pass)
 const {hash} = require("../crypto")
 const { raise } = require("../middleware")

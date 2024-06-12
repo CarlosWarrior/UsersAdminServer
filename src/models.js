@@ -27,6 +27,10 @@ const Session = sequelize.define('session', {
 		primaryKey: true,
 		autoIncrement: true
 	},
+	uuid: {
+		type: Sequelize.UUID,
+  		defaultValue: Sequelize.UUIDV1
+	},
 	content: {
 		type: Sequelize.TEXT,
 		allowNull: false,
